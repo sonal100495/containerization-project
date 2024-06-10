@@ -2,7 +2,6 @@ pipeline {
     agent {
         dockerContainer {
             image 'maven-docker-kubernetes'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     
