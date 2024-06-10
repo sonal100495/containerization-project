@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'sonal10/maven-docker-kubernetes'
+            registryUrl 'https://hub.docker.com/'
+            registryCredentialsId 'docker-hub-credentials-id'
+        }
+    }
     
     environment {
         // Define Docker Hub credentials
@@ -22,8 +28,8 @@ pipeline {
         
         stage('Build and Package') {
             steps {
-                    sh 'mvn clean package'
-                 }
+                sh 'mvn clean package'
+            }
         }
         
         stage('Docker Build') {
