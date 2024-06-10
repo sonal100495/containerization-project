@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker {
+        dockerContainer {
             image 'sonal10/maven-docker-kubernetes'
             registryUrl 'https://hub.docker.com/'
             registryCredentialsId 'docker-hub-credentials-id'
