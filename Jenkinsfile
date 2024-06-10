@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven_3.23' // Name of the Maven installation defined in Jenkins
+        maven 'maven-plugin:3.23' // Name of the Maven installation defined in Jenkins
     }
     
     environment {
