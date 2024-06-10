@@ -1,9 +1,5 @@
 pipeline {
     agent any
-
-    tools {
-        maven 'Maven'
-    }
     
     environment {
         // Define Docker Hub credentials
