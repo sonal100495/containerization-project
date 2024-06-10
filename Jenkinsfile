@@ -2,7 +2,7 @@ pipeline {
     agent {
         dockerContainer {
             image 'sonal10/maven-docker-kubernetes'
-            Url 'https://hub.docker.com/'
+            Url  'https://hub.docker.com/'
             credentialsId 'docker-hub-credentials-id'
         }
     }
