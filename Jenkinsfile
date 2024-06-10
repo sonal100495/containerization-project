@@ -23,7 +23,7 @@ pipeline {
         stage('Build and Package') {
             steps {
                 docker.image('maven:3.6.3-jdk-8').inside {
-                  sh 'mvn clean package'
+                     sh 'mvn clean package'
               }            
             }
         }
