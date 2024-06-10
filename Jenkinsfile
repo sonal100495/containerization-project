@@ -7,16 +7,16 @@ pipeline {
         // Define Kubernetes credentials
         KUBERNETES_CREDENTIALS = credentials('kubernetes-credentials-id')
         // Define Docker image name
-        DOCKER_IMAGE_NAME = 'your-docker-username/your-image-name'
+        DOCKER_IMAGE_NAME = 'sonal10/hello-world-java'
         // Define Kubernetes deployment name
-        KUBERNETES_DEPLOYMENT_NAME = 'your-deployment-name'
+        KUBERNETES_DEPLOYMENT_NAME = 'hello-world-java-app'
     }
     
     stages {
         stage('Checkout') {
             steps {
                 // Checkout source code from repository
-                git 'https://github.com/your-repo.git'
+                git 'https://github.com/sonal100495/containerization-project.git'
             }
         }
         
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 // Login to Docker Hub
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_HUB_CREDENTIALS) {
+                    docker.withRegistry('https://hub.docker.com/', DOCKER_HUB_CREDENTIALS) {
                         // Push Docker image to Docker Hub
                         docker.image(DOCKER_IMAGE_NAME).push()
                     }
@@ -53,8 +53,8 @@ pipeline {
                 // Deploy Docker image to Kubernetes cluster
                 script {
                     kubernetesDeploy(
-                        kubeconfigId: 'your-kubeconfig-id',
-                        configs: 'your-kubeconfig-file',
+                        kubeconfigId: 'kubernetes-credentials-id',
+                        configs: 'config',
                         enableConfigSubstitution: true,
                         configsInline: '''apiVersion: apps/v1
 kind: Deployment
@@ -63,7 +63,7 @@ metadata:
   labels:
     app: ${KUBERNETES_DEPLOYMENT_NAME}
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: ${KUBERNETES_DEPLOYMENT_NAME}
