@@ -4,7 +4,8 @@ pipeline {
             image 'sonal10/maven-docker-kubernetes'
             docker.withRegistry('https://hub.docker.com/', DOCKER_HUB_CREDENTIALS) {
         }
-    }
+    }      
+}
     
     environment {
         // Define Docker Hub credentials
