@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        dockerContainer {
-            image 'maven-docker-kubernetes'
-        }
-    }
+    agent any
     
     environment {
         // Define Docker Hub credentials
