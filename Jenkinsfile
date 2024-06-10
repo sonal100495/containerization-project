@@ -22,9 +22,11 @@ pipeline {
         
         stage('Build and Package') {
             steps {
+                withMaven {
                 // Build Java code using Maven
                 sh 'mvn clean package'
             }
+          }
         }
         
         stage('Docker Build') {
