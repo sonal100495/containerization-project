@@ -16,7 +16,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout source code from repository
-                git 'https://github.com/sonal100495/containerization-project'
+                git branch: 'main', url: 'https://github.com/sonal100495/containerization-project'
             }
         }
         
