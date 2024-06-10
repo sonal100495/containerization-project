@@ -1,12 +1,6 @@
 pipeline {
-    agent {
-        dockerContainer {
-            image 'sonal10/maven-docker-kubernetes'
-            withRegistry('https://hub.docker.com/', DOCKER_HUB_CREDENTIALS) {
-        }
-    }      
-}
-    
+    agent any
+  
     environment {
         // Define Docker Hub credentials
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
