@@ -1,10 +1,10 @@
 pipeline {
-    agent {
-        docker { 
-            image 'docker:latest' 
-            args '-v /var/run/docker.sock:/var/run/docker.sock' 
-        }
+  agent {
+    docker {
+      image 'abhishekf5/maven-abhishek-docker-agent:v1'
+      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
+  }
 
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
