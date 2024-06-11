@@ -33,7 +33,8 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    docker build -t ${DOCKER_IMAGE_NAME} .
+                   sh 'docker build -t ${DOCKER_IMAGE_NAME} .'
+                      }
             }
         }
         
