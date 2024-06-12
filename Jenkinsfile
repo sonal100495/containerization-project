@@ -6,48 +6,35 @@ pipeline {
     }
   }
 
+
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
         KUBERNETES_CREDENTIALS = credentials('kubernetes-credentials-id')
-        DOCKER_IMAGE_NAME = 'sonal10/hello-world-java'
         KUBERNETES_DEPLOYMENT_NAME = 'hello-world-java-app'
     }
-    
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/sonal100495/containerization-project'
+
+  stages {
+    stage('Checkout') {
+      steps {
+        sh 'echo passed'
+        //git branch: 'main', url: 'https://github.com/sonal100495/containerization-project'
+      }
+    }
+    stage('Build and Push Docker Image') {
+      environment {
+        DOCKER_IMAGE = 'sonal10/hello-world-java'
+        // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
+        REGISTRY_CREDENTIALS = credentials('docker-hub-credentials-id')
+      }
+      steps {
+        script {
+            sh 'docker build -t ${DOCKER_IMAGE} .'
+            def dockerImage = docker.image("${DOCKER_IMAGE}")
+            docker.withRegistry('https://hub.docker.com/', "docker-hub-credentials-id'") {
+                dockerImage.push()
             }
         }
-        
-        stage('Build and Package') {
-            steps {
-                script {
-                    docker.image('maven:3.6.3-jdk-8').inside {
-                        sh 'mvn clean package'
-                    } 
-                }            
-            }
-        }
-        
-        stage('Docker Build') {
-            steps {
-                script {
-                   sh 'docker build -t ${DOCKER_IMAGE_NAME} .'
-                      }
-            }
-        }
-        
-        stage('Push to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry('https://hub.docker.com/', DOCKER_HUB_CREDENTIALS) {
-                        docker.image(DOCKER_IMAGE_NAME).push()
-                    }
-                }
-            }
-        }
-        
+      }
+    }
         stage('Deploy to Kubernetes') {
             steps {
                 script {
