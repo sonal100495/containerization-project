@@ -1,0 +1,27 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials with OIDC
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+
+      - name: Deploy to AWS (e.g., deploy to S3, ECS, etc.)
+        run: |
+          # Example for deploying to S3
+          aws s3 sync ./dist s3://$S3_BUCKET --delete
