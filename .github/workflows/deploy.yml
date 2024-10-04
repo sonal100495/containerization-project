@@ -20,6 +20,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-west-2
 
       - name: Deploy to AWS (e.g., deploy to S3, ECS, etc.)
         run: |
